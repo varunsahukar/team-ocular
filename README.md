@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FinAI - AI Financial Survival Engine
 
-## Getting Started
+FinAI is a mobile-first, predictive financial intelligence system built with Next.js, Express, PostgreSQL, Prisma, and Socket.io.
 
-First, run the development server:
+## 🚀 Key Features
 
+- **Dashboard**: Real-time "Days to Zero" runway counter and risk score.
+- **Transaction Simulator**: Fake UPI UI that triggers real-time updates via WebSockets.
+- **Decision Simulator**: Interactive slider to see the future impact of a purchase.
+- **Real-time Engine**: Express + Socket.io updates the UI instantly when data changes.
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15 (App Router), Tailwind CSS, Framer Motion, Recharts
+- **Backend**: Node.js (Express), Socket.io (Real-time), Prisma (ORM)
+- **Database**: PostgreSQL (e.g., Neon / Supabase)
+- **UI Components**: shadcn/ui
+
+## 📦 Getting Started
+
+### 1. Prerequisites
+- Node.js 18+
+- PostgreSQL database (or use SQLite for local testing by changing the provider in `server/prisma/schema.prisma`)
+
+### 2. Backend Setup
 ```bash
+cd server
+npm install
+# Add DATABASE_URL to your .env file
+npx prisma generate
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Frontend Setup
+```bash
+# In the root directory
+npm install
+# Add NEXT_PUBLIC_API_URL=http://localhost:3001 to your .env.local
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏗️ Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `server/`: Express API, Prisma schema, and Socket.io logic.
+- `src/app/`: Next.js pages and layouts.
+- `src/components/providers/socket-provider.tsx`: Handles WebSocket connection and global metrics state.
 
-## Learn More
+## 🌐 Deployment
 
-To learn more about Next.js, take a look at the following resources:
+### Backend (Render/Railway)
+- Connect your repo, set the root directory to `server`.
+- Add `DATABASE_URL` environment variable.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend (Vercel)
+- Connect your repo, set the root directory to the root.
+- Add `NEXT_PUBLIC_API_URL` pointing to your deployed backend.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Database (Neon/Supabase)
+- Create a PostgreSQL instance and copy the connection string.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Built with ❤️ by FinAI Team.
