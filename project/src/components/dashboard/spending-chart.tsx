@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   Bar,
   CartesianGrid,
@@ -31,12 +30,6 @@ const currencyFormatter = new Intl.NumberFormat("en-IN", {
 });
 
 export default function SpendingChart({ data }: SpendingChartProps) {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   const totalSpent = data.reduce((total, day) => total + day.amount, 0);
   const averageSpend = totalSpent / Math.max(data.length, 1);
   const hasSpending = data.some((day) => day.amount > 0);
@@ -67,7 +60,7 @@ export default function SpendingChart({ data }: SpendingChartProps) {
       </div>
 
       <div className="p-4 pt-5 sm:p-6 sm:pt-6">
-        {hasSpending && isMounted ? (
+        {hasSpending ? (
           <div className="h-[340px] w-full rounded-[1.5rem] bg-black/20 p-3 sm:p-5">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={data} margin={{ top: 20, right: 10, left: -12, bottom: 0 }}>

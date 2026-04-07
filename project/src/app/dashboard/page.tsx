@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, CalendarDays, ShieldCheck, Wallet, History, Info, ChevronDown, ChevronUp, Maximize2, Minimize2 } from "lucide-react";
+import { ArrowRight, CalendarDays, ShieldCheck, Wallet, ChevronDown, ChevronUp, Maximize2, Minimize2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import DashboardHero from "@/components/dashboard/dashboard-hero";
 import QuickInsight from "@/components/dashboard/quick-insight";
@@ -275,26 +275,6 @@ export default function DashboardPage() {
         </div>
       </div>
     </main>
-  );
-}
-
-function MetricPanel({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: typeof Wallet;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="surface-card p-6 transition-all">
-      <div className="flex size-10 items-center justify-center rounded-full border border-white/10 text-white/40">
-        <Icon className="size-4" />
-      </div>
-      <p className="mt-6 text-[10px] uppercase tracking-[0.3em] text-white/30">{label}</p>
-      <p className="mt-3 font-display text-2xl font-semibold tracking-tight text-white">{value}</p>
-    </div>
   );
 }
 

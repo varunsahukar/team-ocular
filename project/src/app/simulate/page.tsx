@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +20,6 @@ export default function SimulateTransaction() {
   const [merchant, setMerchant] = useState("");
   const [isPaying, setIsPaying] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
   const numericAmount = Number(amount);
   const merchantName = merchant.trim();
@@ -29,7 +28,6 @@ export default function SimulateTransaction() {
   const handlePay = async () => {
     if (!numericAmount || !merchantName) return;
 
-    setErrorMessage(null);
     setIsPaying(true);
 
     await new Promise((resolve) => setTimeout(resolve, 1200));
@@ -49,7 +47,6 @@ export default function SimulateTransaction() {
       }, 2000);
     } catch (error) {
       console.error(error);
-      setErrorMessage("The payment engine could not submit this transaction. Please try again.");
     } finally {
       setIsPaying(false);
     }

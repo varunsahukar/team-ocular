@@ -80,7 +80,7 @@ export default function RiskScoreCard({ score, isDashboard = false }: RiskScoreC
           </div>
 
           <p className="text-sm leading-relaxed text-white/40 italic">
-            "{riskBand.description} {riskBand.recommendation}"
+            &quot;{riskBand.description} {riskBand.recommendation}&quot;
           </p>
         </div>
       </div>

@@ -39,7 +39,7 @@ export default function LandingPage() {
             transition={{ delay: 0.2 }}
             className="font-display text-4xl md:text-6xl font-light text-white leading-tight"
           >
-            "Complexity is the enemy of <span className="italic gold-glow">clarity</span>. Helix strips away the noise to focus on the only metric that matters: <span className="text-white/40">Time.</span>"
+            &quot;Complexity is the enemy of <span className="italic gold-glow">clarity</span>. Helix strips away the noise to focus on the only metric that matters: <span className="text-white/40">Time.</span>&quot;
           </motion.h2>
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
@@ -72,7 +72,7 @@ export default function LandingPage() {
                   <span className="gold-glow italic text-[0.8em]">Intelligence.</span>
                 </h2>
                 <p className="text-xl text-white/50 leading-relaxed max-w-xl">
-                  Helix isn't just a dashboard. It's a high-performance financial operating system that simulates your future in real-time.
+                  Helix isn&apos;t just a dashboard. It&apos;s a high-performance financial operating system that simulates your future in real-time.
                 </p>
               </div>
               
@@ -118,7 +118,7 @@ export default function LandingPage() {
               <div className="size-24 rounded-full border border-white/10 bg-black/40 flex items-center justify-center mx-auto backdrop-blur-xl">
                 <Zap className="size-10 text-white/80" />
               </div>
-              <p className="font-display text-3xl font-light text-white italic">"Cinematic Finance"</p>
+              <p className="font-display text-3xl font-light text-white italic">&quot;Cinematic Finance&quot;</p>
               <p className="text-white/40 text-sm max-w-xs mx-auto leading-relaxed">
                 A design language where data meets drama. Every metric is a performance, every insight a revelation.
               </p>

@@ -47,7 +47,6 @@ export type PortfolioSummary = {
   stockExposure: number;
   cashAllocation: number;
   holdingsCount: number;
-  insight: string;
 };
 
 export type DashboardMetrics = {
@@ -67,10 +66,6 @@ export type DashboardMetrics = {
 export type DashboardSnapshot = {
   metrics: DashboardMetrics;
   transactions: DashboardTransaction[];
-  portfolio: {
-    positions: PortfolioPosition[];
-    summary: PortfolioSummary;
-  };
 };
 
 export type FinancialScenario = DashboardMetrics & {
@@ -171,24 +166,6 @@ function calculateVolatilityRisk(transactions: TransactionLike[], now: Date): nu
   return clamp(coefficientOfVariation * 9, 0, 14);
 }
 
-function buildPortfolioInsight(summary: PortfolioSummary): string {
-  const exposurePercent = Math.round(summary.stockExposure * 100);
-
-  if (!summary.holdingsCount) {
-    return "No stocks tracked yet. Add holdings to see how market exposure changes your financial survival outlook.";
-  }
-
-  if (summary.stockExposure >= 0.6) {
-    return `${exposurePercent}% of your assets are in stocks. Market swings could meaningfully change your runway.`;
-  }
-
-  if (summary.profitLoss >= 0) {
-    return `Stocks represent ${exposurePercent}% of your assets and are currently helping your net position.`;
-  }
-
-  return `Stocks represent ${exposurePercent}% of your assets and are currently pressuring your net worth.`;
-}
-
 function buildInsight(metrics: DashboardMetrics): string {
   const { balance, daysToZero, riskScore, avgDailySpend, weeklySpend, stockExposure } = metrics;
   const exposurePercent = Math.round(stockExposure * 100);
@@ -254,7 +231,6 @@ export function calculateMetrics({
 
   const riskScore = calculateRiskScore({
     balance,
-    portfolioValue,
     stockExposure,
     daysToZero,
     avgDailySpend,
@@ -294,14 +270,13 @@ type CalculateRiskScoreInput = {
 
 function calculateRiskScore({
   balance,
-  portfolioValue,
   stockExposure,
   daysToZero,
   avgDailySpend,
   transactions,
   spendingTrend,
   now = new Date(),
-}: CalculateRiskScoreInput): number {
+}: Omit<CalculateRiskScoreInput, "portfolioValue">): number {
   let score = 0;
 
   // 1. Runway risk (0-35 points)
