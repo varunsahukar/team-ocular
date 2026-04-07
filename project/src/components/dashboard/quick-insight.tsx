@@ -3,39 +3,44 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Lightbulb } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface QuickInsightProps {
   text: string;
+  isDashboard?: boolean;
 }
 
-export default function QuickInsight({ text }: QuickInsightProps) {
+export default function QuickInsight({ text, isDashboard = false }: QuickInsightProps) {
   return (
     <motion.section
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="surface-panel px-6 py-6 md:px-8 md:py-8"
+      className="surface-panel p-8 glass-card hover-glow"
     >
-      <div className="grid gap-6 md:grid-cols-[auto_1fr_auto] md:items-start">
-        <div className="mt-1 flex size-12 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/70">
+      <div className="grid gap-8 md:grid-cols-[auto_1fr_auto] md:items-start">
+        <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-white/5 bg-white/[0.02] text-white/30">
           <Lightbulb className="size-[18px]" />
         </div>
 
         <div className="max-w-3xl">
-          <p className="section-label">Engine insight</p>
-          <p className="mt-4 text-balance text-2xl leading-[1.2] tracking-[-0.05em] text-white/88 md:text-3xl">
+          <p className="section-label">Engine Intelligence</p>
+          <p className={cn(
+            "mt-5 text-balance text-2xl leading-relaxed tracking-tight text-white/90 md:text-3xl",
+            !isDashboard && "font-display"
+          )}>
             {text}
           </p>
-          <p className="mt-4 text-sm leading-7 text-white/56">
-            Read this alongside the trend graph and risk meter, then move to Decide before you commit to any discretionary spend.
+          <p className="mt-5 text-[13px] leading-relaxed text-white/40">
+            Synthesized from current burn rate and neural pattern analysis. Run a prediction scenario to verify the impact of future capital allocation.
           </p>
         </div>
 
         <Link
           href="/decide"
-          className="inline-flex items-center gap-2 self-start text-sm uppercase tracking-[0.2em] text-white/60 hover:text-white"
+          className="group inline-flex items-center gap-2 self-start text-[10px] uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors"
         >
-          Run scenario
-          <ArrowUpRight className="size-4" />
+          Predict
+          <ArrowUpRight className="size-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Link>
       </div>
     </motion.section>

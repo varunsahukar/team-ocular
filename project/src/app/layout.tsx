@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "FinAI",
+  title: "Helix",
   description:
     "A live finance dashboard for balance, spending runway, and safer payment decisions.",
 };

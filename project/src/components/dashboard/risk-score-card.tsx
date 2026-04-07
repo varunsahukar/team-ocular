@@ -2,12 +2,14 @@
 
 import { motion } from "framer-motion";
 import { AlertTriangle, ShieldAlert, ShieldCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface RiskScoreCardProps {
   score: number;
+  isDashboard?: boolean;
 }
 
-export default function RiskScoreCard({ score }: RiskScoreCardProps) {
+export default function RiskScoreCard({ score, isDashboard = false }: RiskScoreCardProps) {
   const riskBand =
     score < 30
       ? {
@@ -30,46 +32,58 @@ export default function RiskScoreCard({ score }: RiskScoreCardProps) {
   const Icon = score < 30 ? ShieldCheck : score < 70 ? ShieldAlert : AlertTriangle;
 
   return (
-    <section className="surface-panel px-6 py-6 md:px-8 md:py-8">
+    <div className="flex flex-col gap-10 glass-card p-8 rounded-[2rem] hover-glow">
       <div className="flex flex-wrap items-start justify-between gap-6">
-        <div className="max-w-xl">
-          <p className="section-label">Risk model</p>
-          <h2 className="text-balance mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.06em] text-white md:text-5xl">
-            A simple read on how fragile your next week looks.
+        <div className="max-md">
+          <p className="section-label">Neural Risk Model</p>
+          <h2 className={cn(
+            "mt-5 text-4xl font-semibold leading-[1.1] tracking-tight text-white md:text-5xl",
+            !isDashboard && "font-display"
+          )}>
+            Fragility <br />
+            <span className={cn(
+              "text-white/40 italic",
+              !isDashboard && "font-display"
+            )}>Index.</span>
           </h2>
         </div>
 
-        <div className="flex size-14 items-center justify-center rounded-full border border-white/10 text-white/70">
-          <Icon className="size-5" />
+        <div className="flex size-12 items-center justify-center rounded-full border border-white/5 bg-white/[0.02] text-white/30">
+          <Icon className="size-4" />
         </div>
       </div>
 
-      <div className="mt-10 grid gap-8 md:grid-cols-[0.72fr_1.28fr] md:items-end">
+      <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:items-end">
         <div>
-          <p className="text-7xl font-semibold tracking-[-0.08em] text-white">{score}</p>
-          <p className="mt-2 text-[11px] uppercase tracking-[0.24em] text-white/42">
+          <p className={cn(
+            "text-8xl font-semibold tracking-tighter text-white",
+            !isDashboard && "font-display"
+          )}>{score}</p>
+          <p className="mt-3 text-[10px] uppercase tracking-[0.4em] text-white/20">
             {riskBand.label}
           </p>
         </div>
 
-        <div>
-          <div className="h-1.5 overflow-hidden rounded-full bg-white/8">
-            <motion.div
-              animate={{ width: `${Math.max(6, score)}%` }}
-              className="h-full rounded-full bg-white/80"
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            />
-          </div>
-          <div className="mt-3 flex justify-between text-[11px] uppercase tracking-[0.2em] text-white/35">
-            <span>Lower risk</span>
-            <span>Higher risk</span>
+        <div className="space-y-6">
+          <div className="space-y-3">
+            <div className="h-[1px] w-full bg-white/5">
+              <motion.div
+                animate={{ width: `${Math.max(2, score)}%` }}
+                className="h-full bg-white/40 shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </div>
+            <div className="flex justify-between text-[8px] uppercase tracking-[0.4em] text-white/10">
+              <span>Stable</span>
+              <span>Volatile</span>
+            </div>
           </div>
 
-          <p className="mt-6 text-base leading-8 text-white/62">
-            {riskBand.description} {riskBand.recommendation}
+          <p className="text-sm leading-relaxed text-white/40 italic">
+            "{riskBand.description} {riskBand.recommendation}"
           </p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

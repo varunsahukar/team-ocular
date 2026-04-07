@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Bar,
   CartesianGrid,
@@ -30,6 +31,12 @@ const currencyFormatter = new Intl.NumberFormat("en-IN", {
 });
 
 export default function SpendingChart({ data }: SpendingChartProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const totalSpent = data.reduce((total, day) => total + day.amount, 0);
   const averageSpend = totalSpent / Math.max(data.length, 1);
   const hasSpending = data.some((day) => day.amount > 0);
@@ -39,15 +46,15 @@ export default function SpendingChart({ data }: SpendingChartProps) {
   );
 
   return (
-    <section className="surface-panel overflow-hidden py-0">
+    <section className="surface-panel overflow-hidden py-0 glass-card hover-glow">
       <div className="border-b border-white/10 px-6 py-6 sm:px-8">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="section-label">7-day spend</p>
-            <h3 className="mt-3 text-3xl font-semibold tracking-[-0.05em] text-white md:text-[2rem]">
+            <p className="section-label text-white/20">7-day spend</p>
+            <h3 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-[2rem]">
               Spending this week
             </h3>
-            <p className="mt-3 text-sm leading-7 text-white/58">
+            <p className="mt-3 text-sm leading-7 text-white/40">
               A simple view of the last 7 days, so you can spot spikes quickly.
             </p>
           </div>
@@ -60,7 +67,7 @@ export default function SpendingChart({ data }: SpendingChartProps) {
       </div>
 
       <div className="p-4 pt-5 sm:p-6 sm:pt-6">
-        {hasSpending ? (
+        {hasSpending && isMounted ? (
           <div className="h-[340px] w-full rounded-[1.5rem] bg-black/20 p-3 sm:p-5">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={data} margin={{ top: 20, right: 10, left: -12, bottom: 0 }}>
@@ -99,24 +106,22 @@ export default function SpendingChart({ data }: SpendingChartProps) {
                   cursor={{ fill: "rgba(255,255,255,0.03)" }}
                 />
                 <Bar
-                  barSize={26}
                   dataKey="amount"
-                  fill="rgba(255,255,255,0.14)"
-                  radius={[999, 999, 0, 0]}
+                  fill="var(--stock-green)"
+                  opacity={0.4}
+                  radius={[4, 4, 0, 0]}
                 />
                 <Line
                   activeDot={{
-                    fill: "#ffffff",
                     r: 5,
-                    stroke: "#0a0a0a",
+                    stroke: "var(--stock-green)",
                     strokeWidth: 2,
+                    fill: "#000",
                   }}
-                  animationDuration={900}
                   dataKey="amount"
                   dot={false}
-                  stroke="#ffffff"
-                  strokeOpacity={0.9}
-                  strokeWidth={2.5}
+                  stroke="var(--stock-green)"
+                  strokeWidth={2}
                   type="monotone"
                 />
               </ComposedChart>

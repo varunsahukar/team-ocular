@@ -1,6 +1,6 @@
 {
-  "name": "FinAI - Financial Survival Engine",
-  "short_name": "FinAI",
+  "name": "Helix - Financial Survival Engine",
+  "short_name": "Helix",
   "description": "Predictive financial intelligence to help you survive and thrive.",
   "start_url": "/",
   "display": "standalone",

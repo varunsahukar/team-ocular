@@ -45,7 +45,7 @@ export default function SimulateTransaction() {
       );
       setIsSuccess(true);
       setTimeout(() => {
-        router.push("/");
+        router.push("/dashboard");
       }, 2000);
     } catch (error) {
       console.error(error);
@@ -59,15 +59,15 @@ export default function SimulateTransaction() {
     <main className="page-shell">
       <div className="page-gutter">
         <div className="mx-auto max-w-[1440px]">
-          <div className="mb-10 flex items-center justify-between gap-4">
+          <div className="mb-12 flex items-center justify-between gap-4">
             <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/58 hover:text-white"
+              href="/dashboard"
+              className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/30 hover:text-white"
             >
-              <ArrowLeft className="size-4" />
-              Back to dashboard
+              <ArrowLeft className="size-3 transition-transform group-hover:-translate-x-1" />
+              Terminal
             </Link>
-            <span className="section-label">Payment simulator</span>
+            <span className="section-label">Execution Unit</span>
           </div>
 
           <AnimatePresence mode="wait">
@@ -77,102 +77,80 @@ export default function SimulateTransaction() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98 }}
-                className="grid gap-8 xl:grid-cols-[0.92fr_1.08fr]"
+                className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]"
               >
-                <section className="surface-panel px-6 py-8 md:px-10 md:py-10">
-                  <p className="section-label">Pay</p>
-                  <h1 className="text-balance mt-5 max-w-[11ch] text-[clamp(3.2rem,7vw,6.4rem)] font-semibold leading-[0.94] tracking-[-0.08em] text-white">
-                    Simulate a payment before it reshapes your week.
+                <section className="surface-panel p-10">
+                  <p className="section-label">Command</p>
+                  <h1 className="mt-6 text-[clamp(3rem,6vw,5.5rem)] font-semibold leading-[1.05] tracking-tight text-white">
+                    Calibrate your <br />
+                    <span className="text-white/40 italic">burn rate.</span>
                   </h1>
-                  <p className="mt-6 max-w-xl text-base leading-8 text-white/62">
-                    This screen keeps your payment feature intact, but gives it a calmer product feel. Submit a merchant expense here and the dashboard will update through your existing backend flow.
+                  <p className="mt-8 max-w-lg text-lg leading-relaxed text-white/50">
+                    Submit a merchant transaction to the neural engine. Every entry triggers an immediate global re-simulation of your financial runway.
                   </p>
 
-                  <div className="mt-10 grid gap-4 sm:grid-cols-2">
-                    <InfoPanel label="Flow" value="UPI simulation" />
-                    <InfoPanel label="Category" value="Simulated spend" />
-                  </div>
-
-                  <div className="mt-10 border-t border-white/10 pt-6">
-                    <p className="text-sm leading-7 text-white/56">
-                      Use this when you want to feel the exact impact of a merchant payment, then return to the dashboard to see the new runway and chart.
-                    </p>
+                  <div className="mt-12 grid gap-4 sm:grid-cols-2">
+                    <InfoPanel label="Protocol" value="Direct Ledger" />
+                    <InfoPanel label="Category" value="Live Assets" />
                   </div>
                 </section>
 
-                <section className="surface-panel px-6 py-8 md:px-8 md:py-10">
+                <section className="surface-panel p-10">
                   <div className="flex flex-col items-start">
-                    <div className="flex size-[4.5rem] items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-2xl font-semibold text-white">
+                    <div className="flex size-16 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-xl font-light text-white">
                       {merchantGlyph}
                     </div>
-                    <p className="mt-6 text-[11px] uppercase tracking-[0.24em] text-white/42">
-                      Merchant
+                    <p className="mt-8 text-[9px] uppercase tracking-[0.4em] text-white/20">
+                      Entity
                     </p>
-                    <h2 className="mt-3 text-3xl font-semibold tracking-[-0.05em] text-white">
-                      {merchantName || "Enter merchant"}
+                    <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                      {merchantName || "Awaiting input..."}
                     </h2>
-                    <p className="mt-2 text-sm text-white/52">Ready to post to the live engine</p>
                   </div>
 
-                  <div className="mt-10 space-y-6">
+                  <div className="mt-12 space-y-8">
                     <label className="block">
-                      <span className="section-label">Amount</span>
-                      <div className="mt-3 rounded-[1.75rem] border border-white/10 bg-white/[0.025] px-6 py-6">
+                      <span className="section-label">Allocation</span>
+                      <div className="mt-4 rounded-[1.5rem] border border-white/10 bg-white/[0.015] p-6">
                         <Input
                           type="number"
                           value={amount}
                           onChange={(event) => setAmount(event.target.value)}
                           placeholder="0"
-                          className="h-auto border-none bg-transparent px-0 py-0 text-5xl font-semibold tracking-[-0.08em] text-white placeholder:text-white/18 focus-visible:ring-0 md:text-6xl"
+                          className="h-auto border-none bg-transparent p-0 text-5xl font-semibold tracking-tight text-white placeholder:text-white/5 focus-visible:ring-0 md:text-6xl"
                           autoFocus
                         />
                       </div>
                     </label>
 
                     <label className="block">
-                      <span className="section-label">Merchant name</span>
+                      <span className="section-label">Recipient</span>
                       <Input
                         value={merchant}
                         onChange={(event) => setMerchant(event.target.value)}
-                        placeholder="Starbucks, Swiggy, Uber..."
-                        className="mt-3 h-16 rounded-[1.25rem] border-white/10 bg-white/[0.025] px-5 text-base text-white placeholder:text-white/30"
+                        placeholder="Starbucks, Uber, Amazon..."
+                        className="mt-4 h-16 rounded-[1.25rem] border-white/10 bg-white/[0.015] px-6 text-base text-white placeholder:text-white/10 focus:border-white/20"
                       />
                     </label>
 
-                    {errorMessage ? (
-                      <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-5 py-4 text-sm leading-7 text-white/62">
-                        {errorMessage}
-                      </div>
-                    ) : null}
-
-                    <div className="rounded-[1.25rem] border border-white/10 bg-black/20 px-5 py-4">
-                      <p className="section-label">Preview</p>
-                      <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-white">
-                        {numericAmount > 0 ? currencyFormatter.format(numericAmount) : "Enter an amount"}
+                    <div className="rounded-[1.25rem] border border-white/5 bg-white/[0.01] p-6">
+                      <p className="section-label">Recalibration Preview</p>
+                      <p className="mt-4 text-3xl font-semibold tracking-tight text-white">
+                        {numericAmount > 0 ? currencyFormatter.format(numericAmount) : "---"}
                       </p>
-                      <p className="mt-2 text-sm leading-7 text-white/52">
-                        The dashboard will refresh after submission and reflect the backend update.
+                      <p className="mt-3 text-[11px] leading-relaxed text-white/30">
+                        Balance will be adjusted across all connected nodes upon execution.
                       </p>
                     </div>
                   </div>
 
-                  <div className="mt-8">
+                  <div className="mt-10">
                     <Button
                       onClick={handlePay}
                       disabled={!numericAmount || !merchantName || isPaying}
-                      className="h-14 w-full rounded-full border border-white/10 bg-white px-6 text-[11px] font-medium uppercase tracking-[0.24em] text-black hover:bg-white/90"
+                      className="h-16 w-full rounded-full bg-white text-[10px] font-semibold uppercase tracking-[0.3em] text-black transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
                     >
-                      {isPaying ? (
-                        <>
-                          <Loader2 className="mr-2 size-4 animate-spin" />
-                          Processing
-                        </>
-                      ) : (
-                        <>
-                          Confirm payment
-                          <ArrowUpRight className="size-4" />
-                        </>
-                      )}
+                      {isPaying ? "Processing..." : "Confirm Execution"}
                     </Button>
                   </div>
                 </section>
@@ -184,21 +162,26 @@ export default function SimulateTransaction() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="surface-panel flex min-h-[70vh] flex-col items-center justify-center px-6 py-10 text-center"
               >
-                <div className="flex size-28 items-center justify-center rounded-full border border-white/10 bg-white/[0.03]">
+                <div className="flex size-32 items-center justify-center rounded-full border border-[var(--stock-green-muted)] bg-[var(--stock-green-muted)]/10 shadow-[0_0_40px_rgba(0,255,136,0.1)]">
                   <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", damping: 12, stiffness: 200, delay: 0.2 }}
+                    initial={{ scale: 0, rotate: -20 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ 
+                      type: "spring", 
+                      damping: 10, 
+                      stiffness: 200, 
+                      delay: 0.2 
+                    }}
                   >
-                    <CheckCircle2 className="size-14 text-white" />
+                    <CheckCircle2 className="size-16 text-[var(--stock-green)]" />
                   </motion.div>
                 </div>
-                <p className="section-label mt-8">Payment posted</p>
-                <h2 className="mt-4 text-4xl font-semibold tracking-[-0.06em] text-white md:text-5xl">
+                <p className="section-label mt-10 text-[var(--stock-green)]">Execution Successful</p>
+                <h2 className="mt-4 font-display text-5xl font-semibold tracking-tight text-white md:text-6xl">
                   {currencyFormatter.format(numericAmount)}
                 </h2>
-                <p className="mt-4 max-w-md text-sm leading-7 text-white/58">
-                  The transaction was submitted successfully. You are being returned to the dashboard so the updated metrics can come into view.
+                <p className="mt-6 max-w-md text-sm leading-relaxed text-white/40">
+                  Transaction ledger updated. The neural engine is currently recalibrating your runway and risk profiles.
                 </p>
               </motion.div>
             )}

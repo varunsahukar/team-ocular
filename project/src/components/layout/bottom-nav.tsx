@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, PlusCircle, Zap } from "lucide-react";
+import { Home, PlusCircle, Zap, MousePointer2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: Home },
-  { href: "/simulate", label: "Pay", icon: PlusCircle },
-  { href: "/decide", label: "Decide", icon: Zap },
+  { href: "/", label: "Home", icon: Home },
+  { href: "/dashboard", label: "Dashboard", icon: Zap },
+  { href: "/simulate", label: "Execute", icon: PlusCircle },
+  { href: "/decide", label: "Predict", icon: MousePointer2 },
 ];
 
 export default function BottomNav() {
@@ -24,14 +25,14 @@ export default function BottomNav() {
               key={href}
               href={href}
               className={cn(
-                "flex w-full flex-col items-center justify-center rounded-[1.25rem] border px-3 py-2 transition-all duration-200",
+                "flex w-full flex-col items-center justify-center rounded-[1.25rem] border px-3 py-3 transition-all duration-300",
                 isActive
-                  ? "border-white/16 bg-white/[0.05] text-white"
-                  : "border-transparent text-white/46 hover:border-white/10 hover:bg-white/[0.03] hover:text-white/80"
+                  ? "border-white/10 bg-white/[0.05] text-white"
+                  : "border-transparent text-white/20 hover:text-white/40"
               )}
             >
-              <Icon className="size-[18px]" />
-              <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em]">{label}</span>
+              <Icon className="size-[16px]" />
+              <span className="mt-1.5 text-[9px] uppercase tracking-[0.3em]">{label}</span>
             </Link>
           );
         })}

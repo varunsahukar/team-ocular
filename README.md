@@ -1,6 +1,6 @@
-# FinAI - AI Financial Survival Engine
+# Helix - AI Financial Survival Engine
 
-FinAI is a mobile-first, predictive financial intelligence system built with Next.js, Express, PostgreSQL, Prisma, and Socket.io.
+Helix is a mobile-first, predictive financial intelligence system built with Next.js, Express, PostgreSQL, Prisma, and Socket.io.
 
 ## 🚀 Key Features
 
@@ -59,4 +59,4 @@ npm run dev
 - Create a PostgreSQL instance and copy the connection string.
 
 ---
-Built with ❤️ by FinAI Team.
+Built with ❤️ by Helix Team.

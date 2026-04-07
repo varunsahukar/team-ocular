@@ -11,6 +11,7 @@ interface DashboardHeroProps {
   days: number;
   isConnected: boolean;
   weeklySpend: number;
+  isDashboard?: boolean;
 }
 
 const compactCurrencyFormatter = new Intl.NumberFormat("en-IN", {
@@ -31,6 +32,7 @@ export default function DashboardHero({
   days,
   isConnected,
   weeklySpend,
+  isDashboard = false,
 }: DashboardHeroProps) {
   const springValue = useSpring(0, { stiffness: 40, damping: 20 });
   const displayValue = useTransform(springValue, (latest) => Math.floor(latest));
@@ -56,78 +58,94 @@ export default function DashboardHero({
   }, [days, springValue]);
 
   return (
-    <section className="surface-panel overflow-hidden px-6 py-7 sm:px-8 md:px-10 md:py-10">
-      <div className="grid gap-10 xl:grid-cols-[1.08fr_0.92fr] xl:gap-12">
+    <section className="mx-auto max-w-5xl surface-panel overflow-hidden p-8 md:p-10">
+      <div className="grid gap-10 xl:grid-cols-[1.1fr_0.9fr] xl:gap-12">
         <div className="space-y-8">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="section-label">Financial operating system</span>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-white/58">
-              <StatusIcon className="size-3.5" />
-              <span>{isConnected ? "Live sync" : "Reconnecting"}</span>
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="section-label text-[9px]">Financial OS v1.0</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/[0.02] px-3 py-1 text-[9px] uppercase tracking-[0.3em] text-white/40">
+              <StatusIcon className="size-2.5" />
+              <span>{isConnected ? "Active" : "Reconnecting"}</span>
             </div>
           </div>
 
           <div>
-            <h1 className="text-balance max-w-[11ch] text-[clamp(3.4rem,8vw,7.4rem)] font-semibold leading-[0.92] tracking-[-0.08em] text-white">
-              Clarity before every rupee leaves your account.
+            <h1 className={cn(
+              "text-balance max-w-[12ch] text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[0.95] tracking-tight text-white",
+              !isDashboard && "font-display"
+            )}>
+              Clarity <br />
+              <span className={cn(
+                "text-white/40 italic text-[0.85em]",
+                !isDashboard && "font-display"
+              )}>Before Exposure.</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-white/62 md:text-lg">
-              Your balance, runway, and weekly spend stay together in one quieter dashboard, so the next move feels more deliberate and less reactive.
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/40">
+              Your capital velocity and runway risk recalibrated in real-time. A minimalist engine for deliberate wealth management.
             </p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
-            <HeroMetric label="Live balance" value={currencyFormatter.format(balance)} />
-            <HeroMetric label="This week" value={compactCurrencyFormatter.format(weeklySpend)} />
-            <HeroMetric label="Current stance" value={tone.label} />
+            <HeroMetric 
+              label="Net Liquidity" 
+              value={currencyFormatter.format(balance)} 
+              isDashboard={isDashboard} 
+              className="text-[var(--stock-green)]"
+            />
+            <HeroMetric 
+              label="Weekly Burn" 
+              value={compactCurrencyFormatter.format(weeklySpend)} 
+              isDashboard={isDashboard} 
+              className="text-[var(--stock-red)]"
+            />
+            <HeroMetric label="Engine Stance" value={tone.label} isDashboard={isDashboard} />
           </div>
 
-          <div className="flex flex-wrap gap-6 text-sm uppercase tracking-[0.2em] text-white/58">
-            <Link href="/simulate" className="inline-flex items-center gap-2 hover:text-white">
-              Open pay
-              <ArrowUpRight className="size-4" />
+          <div className="flex flex-wrap gap-8 text-[9px] uppercase tracking-[0.3em] text-white/20">
+            <Link href="/simulate" className="group inline-flex items-center gap-2 hover:text-white transition-colors">
+              Execute <ArrowUpRight className="size-2.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-            <Link href="/decide" className="inline-flex items-center gap-2 hover:text-white">
-              Run decision check
-              <ArrowUpRight className="size-4" />
+            <Link href="/decide" className="group inline-flex items-center gap-2 hover:text-white transition-colors">
+              Predict <ArrowUpRight className="size-2.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </div>
         </div>
 
-        <div className="relative min-h-[360px] overflow-hidden rounded-[2rem] border border-white/10 bg-black/20">
+        <div className="relative min-h-[320px] overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.01]">
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute left-6 top-10 h-[42%] w-[58%] rounded-[1.5rem] border border-white/8 [transform:rotate(-8deg)]" />
-            <div className="absolute right-8 top-16 h-[32%] w-[34%] rounded-[1.25rem] border border-white/10 bg-white/[0.025] [transform:rotate(8deg)]" />
-            <div className="absolute bottom-10 left-[18%] h-[26%] w-[30%] rounded-[1.25rem] border border-white/10 bg-white/[0.02] [transform:rotate(7deg)]" />
+            <div className="absolute left-8 top-12 h-[45%] w-[60%] rounded-[1.5rem] border border-white/5 [transform:rotate(-6deg)] bg-white/[0.005]" />
+            <div className="absolute right-10 top-20 h-[35%] w-[40%] rounded-[1.25rem] border border-white/10 bg-white/[0.02] [transform:rotate(10deg)] shadow-2xl" />
           </div>
 
-          <div className="relative z-10 flex h-full flex-col justify-between p-6 md:p-8">
-            <div className="max-w-sm rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-              <p className="section-label">Runway outlook</p>
-              <div className="mt-4 flex items-end gap-2">
-                <motion.span className="text-7xl font-semibold tracking-[-0.08em] text-white tabular-nums">
-                  {displayValue}
-                </motion.span>
-                <span className="pb-3 text-[11px] uppercase tracking-[0.24em] text-white/45">
-                  days
-                </span>
-              </div>
-              <p className="mt-4 text-sm leading-7 text-white/58">{tone.summary}</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <motion.p
+              className={cn(
+                "text-[8rem] font-bold leading-none tracking-tighter text-white/5 md:text-[10rem]",
+                !isDashboard && "font-display"
+              )}
+              style={{ x: displayValue }}
+            >
+              {days}
+            </motion.p>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <p className={cn(
+                "text-7xl font-semibold tracking-tighter text-white md:text-8xl",
+                !isDashboard && "font-display"
+              )}>
+                {days}
+              </p>
+              <p className="mt-3 text-[9px] uppercase tracking-[0.5em] text-white/30">
+                Days of Runway
+              </p>
             </div>
+          </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                <p className="section-label">Balance</p>
-                <p className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white">
-                  {compactCurrencyFormatter.format(balance)}
-                </p>
-              </div>
-              <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                <p className="section-label">Weekly spend</p>
-                <p className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white">
-                  {compactCurrencyFormatter.format(weeklySpend)}
-                </p>
-              </div>
+          <div className="absolute bottom-6 left-0 right-0 px-6">
+            <div className="mx-auto max-w-xs rounded-[1rem] border border-white/10 bg-black/60 p-4 backdrop-blur-xl">
+              <p className="text-[9px] uppercase tracking-[0.3em] text-white/20">Intelligence</p>
+              <p className="mt-2 text-xs leading-relaxed text-white/60">
+                {tone.summary}
+              </p>
             </div>
           </div>
         </div>
@@ -136,11 +154,15 @@ export default function DashboardHero({
   );
 }
 
-function HeroMetric({ label, value }: { label: string; value: string }) {
+function HeroMetric({ label, value, isDashboard, className }: { label: string; value: string; isDashboard?: boolean; className?: string }) {
   return (
-    <div className={cn("rounded-[1.5rem] border border-white/10 bg-white/[0.025] px-5 py-5")}>
-      <p className="text-[11px] uppercase tracking-[0.24em] text-white/40">{label}</p>
-      <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-white">{value}</p>
+    <div className="space-y-3">
+      <p className="text-[9px] uppercase tracking-[0.4em] text-white/20">{label}</p>
+      <p className={cn(
+        "text-xl font-medium tracking-tight text-white",
+        !isDashboard && "font-display",
+        className
+      )}>{value}</p>
     </div>
   );
 }

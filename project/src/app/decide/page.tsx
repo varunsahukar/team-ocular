@@ -80,103 +80,107 @@ export default function DecisionSimulator() {
     <main className="page-shell">
       <div className="page-gutter">
         <div className="mx-auto max-w-[1440px]">
-          <div className="mb-10 flex items-center justify-between gap-4">
+          <div className="mb-12 flex items-center justify-between gap-4">
             <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/58 hover:text-white"
+              href="/dashboard"
+              className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/30 hover:text-white"
             >
-              <ArrowLeft className="size-4" />
-              Back to dashboard
+              <ArrowLeft className="size-3 transition-transform group-hover:-translate-x-1" />
+              Terminal
             </Link>
-            <span className="section-label">Decision simulator</span>
+            <span className="section-label">Prediction Unit</span>
           </div>
 
-          <div className="grid gap-8 xl:grid-cols-[0.94fr_1.06fr]">
-            <section className="surface-panel px-6 py-8 md:px-10 md:py-10">
-              <p className="section-label">Decide</p>
-              <h1 className="text-balance mt-5 max-w-[10ch] text-[clamp(3.2rem,7vw,6.4rem)] font-semibold leading-[0.94] tracking-[-0.08em] text-white">
-                See the cost before you commit.
+          <div className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
+            <section className="surface-panel p-10">
+              <p className="section-label">Neural Scenario</p>
+              <h1 className="mt-6 text-[clamp(3rem,6vw,5.5rem)] font-semibold leading-[1.05] tracking-tight text-white">
+                Visualize the <br />
+                <span className="text-white/40 italic">financial delta.</span>
               </h1>
-              <p className="mt-6 max-w-xl text-base leading-8 text-white/62">
-                The simulator compares a hypothetical purchase against your current metrics, so you can understand the runway impact first and only then decide whether to move ahead.
+              <p className="mt-8 max-w-lg text-lg leading-relaxed text-white/50">
+                Simulate a hypothetical capital deployment to see how it affects your global runway and risk profile before committing to the ledger.
               </p>
 
-              <div className="mt-10 grid gap-4 sm:grid-cols-2">
+              <div className="mt-12 grid gap-4 sm:grid-cols-2">
                 <ScenarioInfo
                   icon={Wallet}
-                  label="Current balance"
+                  label="Available Liquidity"
                   value={currencyFormatter.format(metrics.balance)}
                 />
                 <ScenarioInfo
                   icon={Calendar}
-                  label="Current runway"
+                  label="Current Runway"
                   value={`${metrics.daysToZero} days`}
                 />
               </div>
             </section>
 
-            <section className="surface-panel px-6 py-8 md:px-8 md:py-10">
+            <section className="surface-panel p-10">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <div>
-                  <p className="section-label">Hypothetical purchase</p>
-                  <p className="mt-4 text-5xl font-semibold tracking-[-0.08em] text-white md:text-6xl">
+                  <p className="section-label">Hypothetical Allocation</p>
+                  <p className="mt-5 text-5xl font-semibold tracking-tight text-white md:text-6xl">
                     {currencyFormatter.format(hypotheticalAmount[0])}
                   </p>
                 </div>
-                <span className="rounded-full border border-white/10 px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-white/48">
-                  Max {currencyFormatter.format(metrics.balance)}
+                <span className="rounded-full border border-white/10 bg-white/[0.03] px-5 py-2 text-[9px] uppercase tracking-[0.4em] text-white/40">
+                  Max Limit
                 </span>
               </div>
 
-              <div className="mt-8">
+              <div className="mt-12">
                 <Slider
                   value={hypotheticalAmount}
                   onValueChange={setHypotheticalAmount}
                   max={Math.max(metrics.balance, 500)}
                   step={500}
-                  className="py-4"
+                  className="py-6"
                 />
-                <div className="mt-3 flex justify-between text-[10px] uppercase tracking-[0.24em] text-white/36">
+                <div className="mt-4 flex justify-between text-[9px] uppercase tracking-[0.4em] text-white/10">
                   <span>{currencyFormatter.format(0)}</span>
                   <span>{currencyFormatter.format(metrics.balance)}</span>
                 </div>
               </div>
 
-              <div className="mt-10 grid gap-4 md:grid-cols-3">
+              <div className="mt-12 grid gap-4 md:grid-cols-3">
                 <ScenarioCard
                   icon={Wallet}
-                  label="New balance"
+                  label="Projected"
                   value={currencyFormatter.format(scenario.newBalance)}
-                  detail="after purchase"
+                  detail="Post-Allocation"
+                  valueClassName="text-[var(--stock-green)]"
                 />
                 <ScenarioCard
                   icon={Calendar}
-                  label="New runway"
+                  label="Delta"
                   value={`${scenario.newDaysToZero} days`}
-                  detail={`-${scenario.daysLost} days`}
+                  detail={`-${scenario.daysLost} lost`}
+                  valueClassName={scenario.daysLost > 0 ? "text-[var(--stock-red)]" : ""}
                 />
                 <ScenarioCard
                   icon={AlertCircle}
-                  label="Risk score"
+                  label="Risk Factor"
                   value={`${scenario.newRiskScore}/100`}
-                  detail={`+${scenario.riskIncrease} increase`}
+                  detail={`+${scenario.riskIncrease} delta`}
+                  valueClassName={scenario.riskIncrease > 0 ? "text-[var(--stock-red)]" : ""}
                 />
               </div>
 
-              <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-black/20 px-6 py-6">
-                <p className="section-label">Recommendation</p>
-                <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white">
+              <div className="mt-10 rounded-[1.5rem] border border-white/5 bg-white/[0.01] p-8">
+                <p className="section-label">Engine Recommendation</p>
+                <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white">
                   {recommendation.title}
                 </h2>
-                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/58">
+                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/40">
                   {recommendation.copy}
                 </p>
                 <Link
                   href="/simulate"
-                  className="mt-6 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/60 hover:text-white"
+                  className="group mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/40 hover:text-white"
                 >
-                  Move to pay
-                  <ArrowUpRight className="size-4" />
+                  Proceed to Execution
+                  <ArrowUpRight className="size-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
               </div>
             </section>
@@ -212,11 +216,13 @@ function ScenarioCard({
   label,
   value,
   detail,
+  valueClassName,
 }: {
   icon: typeof Wallet;
   label: string;
   value: string;
   detail: string;
+  valueClassName?: string;
 }) {
   return (
     <div className="surface-card px-5 py-5">
@@ -224,7 +230,9 @@ function ScenarioCard({
         <Icon className="size-4" />
       </div>
       <p className="mt-5 text-[11px] uppercase tracking-[0.24em] text-white/40">{label}</p>
-      <p className="mt-3 text-2xl font-semibold tracking-[-0.05em] text-white">{value}</p>
+      <p className={`mt-3 text-2xl font-semibold tracking-[-0.05em] ${valueClassName || "text-white"}`}>
+        {value}
+      </p>
       <p className="mt-2 text-sm text-white/52">{detail}</p>
     </div>
   );
