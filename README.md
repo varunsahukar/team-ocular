@@ -5,6 +5,8 @@ Helix is a mobile-first, predictive financial intelligence system built with Nex
 ## 🚀 Key Features
 
 - **Dashboard**: Real-time "Days to Zero" runway counter and risk score.
+- **Cinematic UI**: Premium silver shine and gold radiant text effects for a high-end financial experience.
+- **Dynamic Ledger**: Minimize and extend features for recent transactions with smooth Framer Motion animations.
 - **Transaction Simulator**: Fake UPI UI that triggers real-time updates via WebSockets.
 - **Decision Simulator**: Interactive slider to see the future impact of a purchase.
 - **Real-time Engine**: Express + Socket.io updates the UI instantly when data changes.
