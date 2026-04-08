@@ -41,7 +41,7 @@ npm run dev
 
 ## 🏗️ Architecture
 
-- `server/`: Express API, Prisma schema, and Socket.io logic.
+- `server/`: Express API, Prisma schema, and Socket.io logic
 - `src/app/`: Next.js pages and layouts.
 - `src/components/providers/socket-provider.tsx`: Handles WebSocket connection and global metrics state.
 
